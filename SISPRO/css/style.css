@@ -1,0 +1,159 @@
+@charset "utf-8";
+
+body{
+	background-color:#FFF;
+	font-family:Arial, Tahoma, sans-serif;
+}
+#globalP {
+	margin:auto;
+	padding:auto;
+	width:976px;
+	height:830px;
+	background-color: #FFF;
+}
+#headerP {
+	margin:auto;
+	width:976px;
+	height:255px;
+	text-align:right;
+	background-color: #FFFFFF;
+	background-position:bottom;
+	background-image:url(../img/baner.png);
+	background-repeat:no-repeat;
+}
+.barraNav{
+	width:100%;
+	position:fixed;
+	margin-top: 0px;
+}
+#contentP{
+	padding-top:10px;
+	height:auto;
+	width:976px;
+}
+.container{
+	height:auto;
+	width:976px;
+}
+#footerP{
+	margin:auto;
+	clear: both;
+	height:100px;
+	width:976px;
+	text-align:right;
+}
+
+#tablaAgregarUsuario{
+	width:976px;
+	margin:0 0 0 10px;
+	border:0px;
+	text-align:left;
+}
+
+.submitButton {
+	text-align: right;
+	padding-right:456px;
+}
+
+input  {
+	border-color: red;
+}
+
+#nombreUsuario {
+	display:inline;
+}
+
+.LV_validation_message{
+    font-weight:bold;
+    margin:0 0 0 5px;
+}
+
+.LV_valid {
+    color:#00CC00;
+}
+	
+.LV_invalid {
+    color:#CC0000;
+}
+    
+.LV_valid_field,
+input.LV_valid_field:hover, 
+input.LV_valid_field:active,
+textarea.LV_valid_field:hover, 
+textarea.LV_valid_field:active {
+    border: 1px solid #00CC00;
+}
+    
+.LV_invalid_field, 
+input.LV_invalid_field:hover, 
+input.LV_invalid_field:active,
+textarea.LV_invalid_field:hover, 
+textarea.LV_invalid_field:active {
+    border: 1px solid #CC0000;
+}
+legend{
+	text-align:right;
+}
+/*estilo para boton de mantenimiento*/
+.mantenimiento li a{
+	color:#000;
+	text-decoration:none;
+	display:block;
+}
+.mantenimiento li a:hover {
+	background-color:#0088cc;
+}
+.mantenimiento > li {
+	float:left;
+}
+.mantenimiento li ul {
+	display:none;
+	position: absolute;
+	min-width:100px;
+	margin:0 170px 0 0;	
+}
+.mantenimiento li:hover > ul{
+	display:block;
+}
+
+.mateniento li ul li{
+	position:relative;
+}
+.mantenimiento li ul li ul{
+	right:-50px;
+	top:0;
+}
+
+/*estilo para boton del usuario*/
+.usuario li a{
+	color:#000;
+	text-decoration:none;
+	display:block;
+}
+.usuario li a:hover {
+	background-color:#0088cc;
+}
+.usuario > li {
+	float:left;
+}
+.usuario li ul {
+	display:none;
+	position: absolute;
+	min-width:100px;
+	margin:0 0px 0 0;	
+}
+.usuario li:hover > ul{
+	display:block;
+}
+
+.usuario li ul li{
+	position:relative;
+}
+.usuario li ul li ul{
+	right:-50px;
+	top:0;
+}
+
+#deleteButton {
+margin-left:500px;
+}
