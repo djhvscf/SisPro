@@ -9,7 +9,7 @@ class AccesoDatos{
 	public function AccesoDatos(){
 		$this->cnx=false;
 		$this->cadena_conexion='ODBCSispro'; 
-		cadena_conexion = mysql_connect('mysql10.000webhost.com', 'a3243654_sispro', 'sispro123');
+		cadena_conexion = mysql_connect('u615313996_sispr', 'u615313996_sispr', 'cemeja07');
 	}
 	
 
