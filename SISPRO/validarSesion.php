@@ -14,13 +14,13 @@
 	}
 	else{
 		session_start();
-		$_SESSION['Id_usuario'] = $consulta[0];
+		$_SESSION['idusuario'] = $consulta[0];
 		$_SESSION['nombre'] = $consulta[1];
-		$_SESSION['apellido_1'] = $consulta[2];
-		$_SESSION['apellido_2'] = $consulta[3];
-		$_SESSION['nombre_usuario'] = $consulta[4];
-		$_SESSION['contrasena'] = $consulta[5];
-		$_SESSION['id_estado'] = $consulta[6];
+		$_SESSION['apellido1'] = $consulta[2];
+		$_SESSION['apellido2'] = $consulta[3];
+		$_SESSION['nombreusuario'] = $consulta[4];
+		$_SESSION['contrasenna'] = $consulta[5];
+		$_SESSION['idestado'] = $consulta[6];
 		header("location:$redirect");
 	}
 ?>

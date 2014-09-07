@@ -2,33 +2,32 @@
 
 class AccesoDatos{	
 
-	var $cnx;
-	var $cadena_conexion;
-
-
+	var $enlace;
+	
+	/**
+	 * Establece la conexión a la base de datos
+	 */
 	public function AccesoDatos(){
-		$this->cnx=false;
-		$this->cadena_conexion='ODBCSispro'; 
-		cadena_conexion = mysql_connect('u615313996_sispr', 'u615313996_sispr', 'cemeja07');
-	}
-	
-
-	public function ejecutarSQL($psql){	
-		//echo "ingresa a ejecutarSQL";
-		$this->cnx=odbc_connect($this->cadena_conexion,'','');
-		if(!$this->cnx){
-			exit("Falló la conexión:<br>".$this->cnx);
+		$enlace = mysql_connect("mysql.hostinger.es", "u615313996_sispr", "cemeja07");
+		if  (!$enlace) {
+			die('No pudo conectarse: ' . mysql_error());
 		}
-		$rs=odbc_exec($this->cnx, $psql);
-		if (!$rs){
-			exit("Error al ejecutar la sentencia");
-		}	
-		//echo "el rs es: ".$rs;
-		return $rs;
+		mysql_select_db("u615313996_sispr", $enlace);
 	}
 	
+	/**
+	 * Ejecuta una consulta a la base de datos
+	 * @return resultSet resultado de la consulta
+	 */
+	public function ejecutarSQL($psql){	
+		return mysql_query($psql);
+	}
+	
+	/**
+	 * Cierra la conexión con la base de datos
+	 */
 	public function cerrarConexion(){
-		odbc_close($this->cnx);
+		mysql_close($enlace);
 	}
 	
 }

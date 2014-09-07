@@ -11,7 +11,7 @@ class Gestor {
 	
 //Agregar Prospectos - Victor
 	public function agregarProspecto($pnombre, $papellido1, $papellido2, $pidentificacion, $ptelefono, $ptelefonoO, $pcelular, $pemail, $pcolegio,$pestado){
-		$sql="INSERT INTO Prospecto(nombre, apellido_1, apellido_2, numero_identificacion, telefono_1, telefono_2, telefono_3, correo_electronico, colegio_procedencia, id_estado) 
+		$sql="INSERT INTO Prospecto(nombre, apellido1, apellido2, numero_identificacion, telefono_1, telefono_2, telefono_3, correo_electronico, colegio_procedencia, idestado) 
 		VALUES ('".$pnombre."','".$papellido1."','".$papellido2."','".$pidentificacion."','".$ptelefono."','".$ptelefonoO."','".$pcelular."','".$pemail."','".$pcolegio."','".$pestado."')";
 		$this->acceso->ejecutarSQL($sql);
 		$this->acceso->cerrarConexion();
@@ -25,15 +25,15 @@ class Gestor {
 		if (odbc_fetch_row($rs)){
 			$id_prospecto=odbc_result($rs,"id_prospecto");
 			$nombre=odbc_result($rs,"nombre");
-			$apellido1=odbc_result($rs,"apellido_1");
-			$apellido2=odbc_result($rs,"apellido_2");
+			$apellido1=odbc_result($rs,"apellido1");
+			$apellido2=odbc_result($rs,"apellido2");
 			$identificacion=odbc_result($rs,"numero_identificacion");
 			$telefono=odbc_result($rs,"telefono_1");
 			$telefonoO=odbc_result($rs,"telefono_2");
 			$celular=odbc_result($rs,"telefono_3");
 			$email=odbc_result($rs,"correo_electronico");
 			$colegio=odbc_result($rs,"colegio_procedencia");
-			$estadoProspecto=odbc_result($rs,"id_estado");
+			$estadoProspecto=odbc_result($rs,"idestado");
 			$consulta = array($id_prospecto,$nombre,$apellido1,$apellido2,$identificacion,$telefono,$telefonoO,$celular,$email,$colegio,$estadoProspecto);
 		}
 		$this->acceso->cerrarConexion();
@@ -42,7 +42,7 @@ class Gestor {
 	}
 	//Modificar Prospectos
 		public function modificarProspecto($id_prospecto, $pnombre, $papellido1, $papellido2, $pidentificacion, $ptelefono, $ptelefonoO, $pcelular, $pemail, $pcolegio, $pestadoProspecto){	
-		$sql="UPDATE Prospecto SET nombre='".$pnombre."', apellido_1='".$papellido1."',apellido_2='".$papellido2."',numero_identificacion='".$pidentificacion."',telefono_1='".$ptelefono."',telefono_2='".$ptelefonoO."',telefono_3='".$pcelular."',correo_electronico='".$pemail."',colegio_procedencia='".$pcolegio."', id_estado='".$pestadoProspecto."' WHERE id_prospecto=".$id_prospecto."";
+		$sql="UPDATE Prospecto SET nombre='".$pnombre."', apellido1='".$papellido1."',apellido2='".$papellido2."',numero_identificacion='".$pidentificacion."',telefono_1='".$ptelefono."',telefono_2='".$ptelefonoO."',telefono_3='".$pcelular."',correo_electronico='".$pemail."',colegio_procedencia='".$pcolegio."', idestado='".$pestadoProspecto."' WHERE id_prospecto=".$id_prospecto."";
 		$this->acceso->ejecutarSQL($sql);
 		$this->acceso->cerrarConexion();
 	}
@@ -57,8 +57,8 @@ class Gestor {
 		if (odbc_fetch_row($rs)){
 			$id_prospecto=odbc_result($rs,"id_prospecto");
 			$nombre=odbc_result($rs,"nombre");
-			$apellido1=odbc_result($rs,"apellido_1");
-			$apellido2=odbc_result($rs,"apellido_2");
+			$apellido1=odbc_result($rs,"apellido1");
+			$apellido2=odbc_result($rs,"apellido2");
 			$identificacion=odbc_result($rs,"numero_identificacion");
 			$telefono=odbc_result($rs,"telefono_1");
 			$telefonoO=odbc_result($rs,"telefono_2");
@@ -112,8 +112,8 @@ class Gestor {
 		// Sentencia SQL para traer los datos
 		$sql = " SELECT * From Prospecto 
 		WHERE nombre LIKE '%".$buscar."%'
-		OR apellido_1 LIKE '%".$buscar."%'
-		OR apellido_2 LIKE '%".$buscar."%'
+		OR apellido1 LIKE '%".$buscar."%'
+		OR apellido2 LIKE '%".$buscar."%'
 		OR numero_identificacion LIKE '%".$buscar."%'
 		OR telefono_1 LIKE '%".$buscar."%'
 		OR telefono_2 LIKE '%".$buscar."%'
@@ -127,15 +127,15 @@ class Gestor {
 		while(odbc_fetch_row($rs)){
 			$id_prospecto=odbc_result($rs,"id_prospecto");
 			$nombre=odbc_result($rs,"nombre");
-			$apellido1=odbc_result($rs,"apellido_1");
-			$apellido2=odbc_result($rs,"apellido_2");
+			$apellido1=odbc_result($rs,"apellido1");
+			$apellido2=odbc_result($rs,"apellido2");
 			$identificacion=odbc_result($rs,"numero_identificacion");
 			$telefono1=odbc_result($rs,"telefono_1");
 			$telefono2=odbc_result($rs,"telefono_2");
 			$telefono3=odbc_result($rs,"telefono_3");
 			$correo=odbc_result($rs,"correo_electronico");
 			$colegioProcedencia=odbc_result($rs,"colegio_procedencia");
-			$idEstado=odbc_result($rs,"id_estado");
+			$idEstado=odbc_result($rs,"idestado");
 			$registro = array($id_prospecto=>array($id_prospecto,$nombre,$apellido1,$apellido2,$identificacion,$telefono1,$telefono2,$telefono3,$correo, $colegioProcedencia,$idEstado));
 			$consulta = array_merge($consulta, $registro);			
 		}
@@ -303,16 +303,16 @@ class Gestor {
 		$consulta=array();
 	
 		// Sentencia SQL para traer los datos
-		$sql="SELECT Prospecto.id_prospecto, Prospecto.nombre, Prospecto.apellido_1, Prospecto.apellido_2 FROM Prospecto WHERE id_prospecto = ".$id_prospecto.";";
+		$sql="SELECT Prospecto.id_prospecto, Prospecto.nombre, Prospecto.apellido1, Prospecto.apellido2 FROM Prospecto WHERE id_prospecto = ".$id_prospecto.";";
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		while(odbc_fetch_row($rs)){
 			$nombre = odbc_result($rs, "nombre");
-			$apellido_1 = odbc_result($rs, "apellido_1");
-			$apellido_2 = odbc_result($rs, "apellido_2");
+			$apellido1 = odbc_result($rs, "apellido1");
+			$apellido2 = odbc_result($rs, "apellido2");
 			
 			$id_prospecto = odbc_result($rs, "id_prospecto");
-			$nombre_prospecto = $nombre." ".$apellido_1." ".$apellido_2;
+			$nombre_prospecto = $nombre." ".$apellido1." ".$apellido2;
 			
 			$registro = array($id_prospecto=>array($id_prospecto,$nombre_prospecto));
 			$consulta = array_merge($consulta, $registro);			
@@ -331,7 +331,7 @@ class Gestor {
 		// ========================================================================================
 		$sql = "";
 		
-		$sql="INSERT INTO contacto(fecha, comentarios, id_carrera, id_prospecto, id_usuario, id_medio) VALUES ('".$fecha."', '".$comentario."', ".$id_carrera.", ".$id_prospecto.", ".$id_usuarios.", ".$id_medio.");";
+		$sql="INSERT INTO contacto(fecha, comentarios, id_carrera, id_prospecto, idusuario, id_medio) VALUES ('".$fecha."', '".$comentario."', ".$id_carrera.", ".$id_prospecto.", ".$id_usuarios.", ".$id_medio.");";
 		$this->acceso->ejecutarSQL($sql);
 		$this->acceso->cerrarConexion();
 	}	
@@ -410,9 +410,9 @@ class Gestor {
 	
 		// Sentencia SQL para traer los datos
 		$sql = "
-		SELECT Contacto.id_contacto, Contacto.fecha, Medio_comunicacion.medio_nombre 
-		FROM Medio_comunicacion INNER JOIN Contacto ON Medio_comunicacion.id_Medio = Contacto.id_medio 
-		WHERE Contacto.id_prospecto = ".$idprospecto."
+		SELECT contacto.id_contacto, contacto.fecha, Medio_comunicacion.medio_nombre 
+		FROM Medio_comunicacion INNER JOIN contacto ON Medio_comunicacion.id_Medio = contacto.id_medio 
+		WHERE contacto.id_prospecto = ".$idprospecto."
 		ORDER BY fecha DESC;";
 		
 		$rs = $this->acceso->ejecutarSQL($sql);
@@ -447,9 +447,9 @@ class Gestor {
 		
 		// Sentencia SQL para traer los datos
 		$sql = "
-		SELECT Contacto.id_contacto, Contacto.fecha, Medio_comunicacion.medio_nombre 
-		FROM Medio_comunicacion INNER JOIN Contacto ON Medio_comunicacion.id_Medio = Contacto.id_medio 
-		WHERE Contacto.id_prospecto = ".$idprospecto."
+		SELECT contacto.id_contacto, contacto.fecha, Medio_comunicacion.medio_nombre 
+		FROM Medio_comunicacion INNER JOIN contacto ON Medio_comunicacion.id_Medio = contacto.id_medio 
+		WHERE contacto.id_prospecto = ".$idprospecto."
 		AND (
 			fecha LIKE '%".$buscar."%'
 			OR medio_nombre LIKE '%".$buscar."%'
@@ -477,7 +477,7 @@ class Gestor {
 	//Agregar Usuarios - Dennis
 	
 	public function agregarUsuario($pnombre, $papellido_1, $papellido_2, $pnumero_cedula, $pnombre_usuario, $pcontrasena, $pid_estado){
-		$sql="INSERT INTO Usuario(nombre, apellido_1, apellido_2, numero_cedula, nombre_usuario, contrasena, id_estado) VALUES ('".$pnombre."','".$papellido_1."','".$papellido_2."','".$pnumero_cedula."','".$pnombre_usuario."','".$pcontrasena."','".$pid_estado."')";
+		$sql="INSERT INTO usuario(nombre, apellido1, apellido2, numero_cedula, nombreusuario, contrasenna, idestado) VALUES ('".$pnombre."','".$papellido_1."','".$papellido_2."','".$pnumero_cedula."','".$pnombre_usuario."','".$pcontrasena."','".$pid_estado."')";
 		$this->acceso->ejecutarSQL($sql);
 		$this->acceso->cerrarConexion();
 	}
@@ -489,19 +489,19 @@ class Gestor {
 		$registro=array();
 		$consulta=array();
 		
-		$sql = "SELECT * FROM Usuario";
+		$sql = "SELECT * FROM usuario";
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		while(odbc_fetch_row($rs)){
-			$id_usuario=odbc_result($rs,"id_usuario");//0
+			$idusuario=odbc_result($rs,"idusuario");//0
 			$nombre=odbc_result($rs,"nombre");//1
-			$apellido_1=odbc_result($rs,"apellido_1");//2
-			$apellido_2=odbc_result($rs,"apellido_2");//3
+			$apellido1=odbc_result($rs,"apellido1");//2
+			$apellido2=odbc_result($rs,"apellido2");//3
 			$numero_cedula=odbc_result($rs,"numero_cedula");//4
-			$nombre_usuario=odbc_result($rs,"nombre_usuario");//5
-			$contrasena=odbc_result($rs,"contrasena");//6
-			$id_estado=odbc_result($rs,"id_estado");//7
-			$registro = array($id_usuario=>array($id_usuario,$nombre,$apellido_1,$apellido_2,$numero_cedula, $nombre_usuario, $contrasena, $id_estado));
+			$nombreusuario=odbc_result($rs,"nombreusuario");//5
+			$contrasenna=odbc_result($rs,"contrasenna");//6
+			$idestado=odbc_result($rs,"idestado");//7
+			$registro = array($idusuario=>array($idusuario,$nombre,$apellido1,$apellido2,$numero_cedula, $nombreusuario, $contrasenna, $idestado));
 			$consulta = array_merge($consulta, $registro);			
 		}
 		$this->acceso->cerrarConexion();
@@ -509,21 +509,21 @@ class Gestor {
 	}
 	
 	//Buscar Usuarios Por ID - Dennis
-	public function buscarUsuarioPorID($id_usuario){
+	public function buscarUsuarioPorID($idusuario){
 				
-		$sql = "SELECT * FROM usuario WHERE Id_usuario=".$id_usuario;
+		$sql = "SELECT * FROM usuario WHERE idusuario=".$idusuario;
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		if (odbc_fetch_row($rs)){
-			$id_usuario=odbc_result($rs,"id_usuario");
+			$idusuario=odbc_result($rs,"idusuario");
 			$nombre=odbc_result($rs,"nombre");
-			$apellido_1=odbc_result($rs,"apellido_1");
-			$apellido_2=odbc_result($rs,"apellido_2");
+			$apellido1=odbc_result($rs,"apellido1");
+			$apellido2=odbc_result($rs,"apellido2");
 			$numero_cedula=odbc_result($rs,"numero_cedula");
-			$nombre_usuario=odbc_result($rs,"nombre_usuario");
-			$contrasena=odbc_result($rs,"contrasena");
-			$id_estado=odbc_result($rs,"id_estado");
-			$consulta = array($id_usuario, $nombre, $apellido_1, $apellido_2, $numero_cedula, $nombre_usuario, $contrasena, $id_estado);
+			$nombreusuario=odbc_result($rs,"nombreusuario");
+			$contrasenna=odbc_result($rs,"contrasenna");
+			$idestado=odbc_result($rs,"idestado");
+			$consulta = array($idusuario, $nombre, $apellido1, $apellido2, $numero_cedula, $nombreusuario, $contrasenna, $idestado);
 		}
 		$this->acceso->cerrarConexion();
 		return $consulta;
@@ -537,7 +537,7 @@ class Gestor {
 		$consulta=array();
 		$existe=false;
 		
-		$sql= "SELECT * FROM usuario WHERE nombre_usuario='".$buscar."';";
+		$sql= "SELECT * FROM usuario WHERE nombreusuario='".$buscar."';";
 		$rs = $this->acceso->ejecutarSQL($sql);
 		while(odbc_fetch_row($rs)){
 			$existe=true;
@@ -552,24 +552,24 @@ class Gestor {
 		$registro=array();
 		$consulta=array();
 		$existe=false;
-		$contrasena;
+		$contrasenna;
 		
-		$sql= "SELECT contrasena FROM usuario WHERE id_usuario=".$buscar;
+		$sql= "SELECT contrasenna FROM usuario WHERE idusuario=".$buscar;
 		$rs = $this->acceso->ejecutarSQL($sql);
 		while(odbc_fetch_row($rs)){
-			$contrasena=odbc_result($rs,"contrasena");
+			$contrasenna=odbc_result($rs,"contrasenna");
 		}
 		$this->acceso->cerrarConexion();
-		return $contrasena;
+		return $contrasenna;
 	}
 	
-	public function verificaUsuarioModificar($nombre_usuario){
+	public function verificaUsuarioModificar($nombreusuario){
 	
 		$consulta=0;
 		
-		$sql = "SELECT COUNT (*) AS nombre_usuario FROM Usuario WHERE nombre_usuario='".$nombre_usuario."';";
+		$sql = "SELECT COUNT (*) AS nombreusuario FROM usuario WHERE nombreusuario='".$nombreusuario."';";
 		$rs = $this->acceso->ejecutarSQL($sql);
-		$existe = odbc_result($rs,"nombre_usuario");
+		$existe = odbc_result($rs,"nombreusuario");
 		if ($existe > 1 ){
 			$consulta= 2;
 		}
@@ -584,25 +584,25 @@ class Gestor {
 		$registro=array();
 		$consulta=array();
 		
-		$sql= "SELECT * FROM Usuario
+		$sql= "SELECT * FROM usuario
 				WHERE nombre LIKE '%".$buscar."%'
-				OR apellido_1 LIKE '%".$buscar."%'
-				OR apellido_2 LIKE '%".$buscar."%'
-				OR nombre_usuario LIKE '%".$buscar."%'
+				OR apellido1 LIKE '%".$buscar."%'
+				OR apellido2 LIKE '%".$buscar."%'
+				OR nombreusuario LIKE '%".$buscar."%'
 				OR numero_cedula LIKE '%".$buscar."%';";
 				
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		while(odbc_fetch_row($rs)){
-			$id_usuario=odbc_result($rs,"id_usuario");//0
+			$idusuario=odbc_result($rs,"idusuario");//0
 			$nombre=odbc_result($rs,"nombre");//1
-			$apellido_1=odbc_result($rs,"apellido_1");//2
-			$apellido_2=odbc_result($rs,"apellido_2");//3
+			$apellido1=odbc_result($rs,"apellido1");//2
+			$apellido2=odbc_result($rs,"apellido2");//3
 			$numero_cedula=odbc_result($rs,"numero_cedula");//4
-			$nombre_usuario=odbc_result($rs,"nombre_usuario");//5
-			$contrasena=odbc_result($rs,"contrasena");//6
-			$id_estado=odbc_result($rs,"id_estado");//7
-			$registro = array($id_usuario=>array($id_usuario,$nombre,$apellido_1,$apellido_2,$numero_cedula, $nombre_usuario, $contrasena, $id_estado));
+			$nombreusuario=odbc_result($rs,"nombreusuario");//5
+			$contrasenna=odbc_result($rs,"contrasenna");//6
+			$idestado=odbc_result($rs,"idestado");//7
+			$registro = array($idusuario=>array($idusuario,$nombre,$apellido1,$apellido2,$numero_cedula, $nombreusuario, $contrasenna, $idestado));
 			$consulta = array_merge($consulta, $registro);			
 		}
 		$this->acceso->cerrarConexion();
@@ -610,8 +610,8 @@ class Gestor {
 	}
 	
 	//Modificar Usuarios - Dennis
-	public function modificarUsuario($id_usuario, $pnombre, $papellido_1, $papellido_2, $pnumero_cedula, $pnombre_usuario, $pcontrasena, $pid_estado){
-		$sql="UPDATE Usuario SET nombre=" ."'". $pnombre . "'" . ", apellido_1=" . "'"  . $papellido_1 . "'" .", apellido_2=" ."'" .$papellido_2 . "'"  . ", numero_cedula=". "'" .$pnumero_cedula. "'" . ",nombre_usuario=". "'" .$pnombre_usuario."'" . ",contrasena="."'".$pcontrasena."'".",id_estado="."'".$pid_estado. "'". "WHERE id_usuario=$id_usuario";		
+	public function modificarUsuario($idusuario, $pnombre, $papellido_1, $papellido_2, $pnumero_cedula, $pnombre_usuario, $pcontrasena, $pid_estado){
+		$sql="UPDATE usuario SET nombre=" ."'". $pnombre . "'" . ", apellido1=" . "'"  . $papellido_1 . "'" .", apellido2=" ."'" .$papellido_2 . "'"  . ", numero_cedula=". "'" .$pnumero_cedula. "'" . ",nombreusuario=". "'" .$pnombre_usuario."'" . ",contrasenna="."'".$pcontrasena."'".",idestado="."'".$pid_estado. "'". "WHERE idusuario=$idusuario";		
 		$this->acceso->ejecutarSQL($sql);
 		$this->acceso->cerrarConexion();
 	}
@@ -626,21 +626,21 @@ class Gestor {
 		$consulta=array();
 		$rowPerPage = 4;
 		
-		$sql = "SELECT Prospecto.id_prospecto, Prospecto.nombre, Prospecto.apellido_1, Prospecto.apellido_2, Prospecto.numero_identificacion, Prospecto.telefono_1, Prospecto.correo_electronico, Contacto.fecha FROM Prospecto INNER JOIN Contacto ON Contacto.id_prospecto = Prospecto.id_prospecto WHERE Contacto.fecha = (SELECT max(fecha) from Contacto where Contacto.id_prospecto = Prospecto.id_prospecto) UNION SELECT Prospecto.id_prospecto, Prospecto.nombre, Prospecto.apellido_1, Prospecto.apellido_2, Prospecto.numero_identificacion, Prospecto.telefono_1, Prospecto.correo_electronico, null FROM Prospecto WHERE id_prospecto NOT IN (SELECT Prospecto.id_prospecto FROM Prospecto INNER JOIN Contacto ON Contacto.id_prospecto = Prospecto.id_prospecto) ORDER BY Contacto.fecha DESC";
+		$sql = "SELECT Prospecto.id_prospecto, Prospecto.nombre, Prospecto.apellido1, Prospecto.apellido2, Prospecto.numero_identificacion, Prospecto.telefono_1, Prospecto.correo_electronico, contacto.fecha FROM Prospecto INNER JOIN contacto ON contacto.id_prospecto = Prospecto.id_prospecto WHERE contacto.fecha = (SELECT max(fecha) from contacto where contacto.id_prospecto = Prospecto.id_prospecto) UNION SELECT Prospecto.id_prospecto, Prospecto.nombre, Prospecto.apellido1, Prospecto.apellido2, Prospecto.numero_identificacion, Prospecto.telefono_1, Prospecto.correo_electronico, null FROM Prospecto WHERE id_prospecto NOT IN (SELECT Prospecto.id_prospecto FROM Prospecto INNER JOIN contacto ON contacto.id_prospecto = Prospecto.id_prospecto) ORDER BY contacto.fecha DESC";
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		while(odbc_fetch_row($rs)){
 			$id_prospecto=odbc_result($rs,"id_prospecto");
 			$nombre=odbc_result($rs,"nombre");
-			$apellido1=odbc_result($rs,"apellido_1");
-			$apellido2=odbc_result($rs,"apellido_2");
+			$apellido1=odbc_result($rs,"apellido1");
+			$apellido2=odbc_result($rs,"apellido2");
 			$identificacion=odbc_result($rs,"numero_identificacion");
 			$telefono1=odbc_result($rs,"telefono_1");
 			$telefono2=odbc_result($rs,"telefono_2");
 			$telefono3=odbc_result($rs,"telefono_3");
 			$correo=odbc_result($rs,"correo_electronico");
 			$colegioProcedencia=odbc_result($rs,"colegio_procedencia");
-			$idEstado=odbc_result($rs,"id_estado");
+			$idEstado=odbc_result($rs,"idestado");
 			$registro = array($id_prospecto=>array($id_prospecto,$nombre,$apellido1,$apellido2,$identificacion,$telefono1,$telefono2,$telefono3,$correo, $colegioProcedencia,$idEstado));
 			$consulta = array_merge($consulta, $registro);			
 		}
@@ -663,21 +663,21 @@ class Gestor {
 	
 	
 	public function buscarProspectoPorContacto($id_contacto) {
-		$sql = "SELECT * from Prospecto INNER JOIN Contacto ON Contacto.id_prospecto = Prospecto.id_prospecto where Contacto.id_contacto = $id_contacto";
+		$sql = "SELECT * from Prospecto INNER JOIN contacto ON contacto.id_prospecto = Prospecto.id_prospecto where contacto.id_contacto = $id_contacto";
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		while(odbc_fetch_row($rs)){
 			$id_prospecto=odbc_result($rs,"id_prospecto");
 			$nombre=odbc_result($rs,"nombre");
-			$apellido1=odbc_result($rs,"apellido_1");
-			$apellido2=odbc_result($rs,"apellido_2");
+			$apellido1=odbc_result($rs,"apellido1");
+			$apellido2=odbc_result($rs,"apellido2");
 			$identificacion=odbc_result($rs,"numero_identificacion");
 			$telefono1=odbc_result($rs,"telefono_1");
 			$telefono2=odbc_result($rs,"telefono_2");
 			$telefono3=odbc_result($rs,"telefono_3");
 			$correo=odbc_result($rs,"correo_electronico");
 			$colegioProcedencia=odbc_result($rs,"colegio_procedencia");
-			$idEstado=odbc_result($rs,"id_estado");
+			$idEstado=odbc_result($rs,"idestado");
 			$consulta = array($id_prospecto,$nombre,$apellido1,$apellido2,$identificacion,$telefono1,$telefono2,$telefono3,$correo, $colegioProcedencia,$idEstado);	
 		}
 		$this->acceso->cerrarConexion();
@@ -707,15 +707,15 @@ class Gestor {
 			$id_prospecto=odbc_result($rs,"id_prospecto");
 			
 			$nombre=odbc_result($rs,"nombre");
-			$apellido1=odbc_result($rs,"apellido_1");
-			$apellido2=odbc_result($rs,"apellido_2");
+			$apellido1=odbc_result($rs,"apellido1");
+			$apellido2=odbc_result($rs,"apellido2");
 			$identificacion=odbc_result($rs,"numero_identificacion");
 			$telefono1=odbc_result($rs,"telefono_1");
 			$telefono2=odbc_result($rs,"telefono_2");
 			$telefono3=odbc_result($rs,"telefono_3");
 			$correo=odbc_result($rs,"correo_electronico");
 			$colegioProcedencia=odbc_result($rs,"colegio_procedencia");
-			$idEstado=odbc_result($rs,"id_estado");
+			$idEstado=odbc_result($rs,"idestado");
 			$registro = array($id_prospecto=>array($id_prospecto,$nombre,$apellido1,$apellido2,$identificacion,$telefono1,$telefono2,$telefono3,$correo, $colegioProcedencia,$idEstado));
 			$consulta = array_merge($consulta, $registro);	
 			
@@ -724,11 +724,11 @@ class Gestor {
 		return $consulta;
 	}
 	
-	//Buscar Contacto por ID - Jose
+	//Buscar contacto por ID - Jose
 
 	public function buscarContactoPorID($id_contacto){
 				
-		$sql = "SELECT * FROM Contacto WHERE id_contacto=".$id_contacto;
+		$sql = "SELECT * FROM contacto WHERE id_contacto=".$id_contacto;
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		if (odbc_fetch_row($rs)){
@@ -737,9 +737,9 @@ class Gestor {
 			$comentarios=odbc_result($rs,"comentarios");
 			$id_carrera=odbc_result($rs,"id_carrera");
 			$id_prospecto=odbc_result($rs,"id_prospecto");
-			$id_usuario=odbc_result($rs,"id_usuario");
+			$idusuario=odbc_result($rs,"idusuario");
 			$id_medio=odbc_result($rs,"id_medio");
-			$consulta = array($id_contacto, $fecha, $comentarios, $id_carrera, $id_prospecto, $id_usuario, $id_medio);
+			$consulta = array($id_contacto, $fecha, $comentarios, $id_carrera, $id_prospecto, $idusuario, $id_medio);
 		}
 		$this->acceso->cerrarConexion();
 		return $consulta;
@@ -765,14 +765,14 @@ class Gestor {
 	//Modificar contacto - Jose
 	
 	public function modificarContacto($id_contacto, $comentarios){
-		$sql="UPDATE Contacto SET comentarios=" ."'". $comentarios . "'" . " WHERE id_contacto=$id_contacto";		
+		$sql="UPDATE contacto SET comentarios=" ."'". $comentarios . "'" . " WHERE id_contacto=$id_contacto";		
 		$this->acceso->ejecutarSQL($sql);
 		$this->acceso->cerrarConexion();
 	}
 	
 	//Buscar ultimo contacto de prospecto - Jose
 	public function buscarUltimoContactoDeProspecto($id_prospecto) {
-		$sql="SELECT * FROM Contacto WHERE Contacto.fecha = (SELECT max(fecha) from Contacto where id_prospecto =" .  $id_prospecto . ")";
+		$sql="SELECT * FROM contacto WHERE contacto.fecha = (SELECT max(fecha) from contacto where id_prospecto =" .  $id_prospecto . ")";
 		$rs = $this->acceso->ejecutarSQL($sql);
 		
 		if (odbc_fetch_row($rs)){
@@ -781,9 +781,9 @@ class Gestor {
 			$comentarios=odbc_result($rs,"comentarios");
 			$id_carrera=odbc_result($rs,"id_carrera");
 			$id_prospecto=odbc_result($rs,"id_prospecto");
-			$id_usuario=odbc_result($rs,"id_usuario");
+			$idusuario=odbc_result($rs,"idusuario");
 			$id_medio=odbc_result($rs,"id_medio");
-			$consulta = array($id_contacto, $fecha, $comentarios, $id_carrera, $id_prospecto, $id_usuario, $id_medio);
+			$consulta = array($id_contacto, $fecha, $comentarios, $id_carrera, $id_prospecto, $idusuario, $id_medio);
 		}
 		
 		$this->acceso->cerrarConexion();
@@ -793,39 +793,43 @@ class Gestor {
 	//Eliminar contacto - Jose
 	
 	public function eliminarContacto($id_contacto) {
-		$sql = "DELETE FROM CONTACTO WHERE id_contacto = " .$id_contacto . ';';
+		$sql = "DELETE FROM contacto WHERE id_contacto = " .$id_contacto . ';';
 		$this->acceso->ejecutarSQL($sql);
 		$this->acceso->cerrarConexion();
 	}
 	
 	// ============================================================================================
-	// Buscar Usuario - Melvin
+	// Buscar usuario - Melvin
 	// ============================================================================================
-	public function buscarUsuario($nombre_usuario, $contrasena){
+	public function buscarUsuario($nombreusuario, $contrasenna){
 		// ========================================================================================
 		// VARIABLES>>
 		// ========================================================================================
 		$sql = "";
 		$rs = false;
-		$sql = "
-			SELECT Usuario.Id_usuario, Usuario.nombre, Usuario.apellido_1, Usuario.apellido_2, Usuario.nombre_usuario, Usuario.contrasena, Usuario.id_estado
-			FROM Usuario
-			WHERE nombre_usuario = '".$nombre_usuario."' AND contrasena = '".$contrasena."';
-		";
+		//$sql = "
+			//SELECT usuario.idusuario, usuario.nombre, usuario.apellido1, usuario.apellido2, usuario.nombreusuario, usuario.contrasenna, usuario.idestado
+			//FROM usuario
+			//WHERE nombreusuario = ".$nombreusuario." AND contrasenna = ".$contrasenna.";
+		//";
+		
+		$sql = "SELECT usuario.idusuario, usuario.nombre, usuario.apellido1, usuario.apellido2, usuario.nombreusuario, usuario.contrasenna, usuario.idestado
+FROM usuario
+WHERE nombreusuario = djhv AND contrasenna = 123;";
 		
 		$rs = $this->acceso->ejecutarSQL($sql);
 
 		while(odbc_fetch_row($rs)){
 		
-			$Id_usuario = odbc_result($rs,"Id_usuario");
+			$idusuario = odbc_result($rs,"idusuario");
 			$nombre = odbc_result($rs,"nombre");
-			$apellido_1 = odbc_result($rs,"apellido_1");
-			$apellido_2 = odbc_result($rs,"apellido_2");
-			$nombre_usuario = odbc_result($rs,"nombre_usuario");
-			$contrasena = odbc_result($rs,"contrasena");
-			$id_estado = odbc_result($rs,"id_estado");
+			$apellido1 = odbc_result($rs,"apellido1");
+			$apellido2 = odbc_result($rs,"apellido2");
+			$nombreusuario = odbc_result($rs,"nombreusuario");
+			$contrasenna = odbc_result($rs,"contrasenna");
+			$idestado = odbc_result($rs,"idestado");
 			
-			$consulta = array($Id_usuario, $nombre, $apellido_1, $apellido_2, $nombre_usuario, $contrasena, $id_estado);
+			$consulta = array($idusuario, $nombre, $apellido1, $apellido2, $nombreusuario, $contrasenna, $idestado);
 		}
 		$this->acceso->cerrarConexion();
 
